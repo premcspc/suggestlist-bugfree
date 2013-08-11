@@ -144,15 +144,27 @@
 				}
 			}
 
-			var val = $.trim( this.element.val() ).replace(/\s+/, ' '),
+			var val = this.element.val().replace(/\s+/, ' '), //$.trim( this.element.val() ).replace(/\s+/, ' '),
 				$li = this.picker.find( 'li' ),
 				$selected = $li.filter( '.suggestlist-selected' ).first();
 			if ( val === $selected.text() ) {
 				return;
 			}
-			if ( $.inArray( val, this.options.list ) === -1 ) {
-				return false;
-			}
+
+			// bug free function
+			var partialMatchFound = false;
+
+			$.each(this.options.list, function(index, listItem) {
+				if(!partialMatchFound && listItem.indexOf(val) > -1) {
+					partialMatchFound = true;
+					val = listItem;
+				}
+			});
+
+			// if ( $.inArray( val, this.options.list ) === -1 ) {
+			// 	return false;
+			// }
+
 			$selected.removeClass( 'suggestlist-selected' );
 			this.picker.find( 'li' ).each( function( i, elem ) {
 				if ( $( elem ).text() === val ) {
