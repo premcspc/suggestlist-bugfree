@@ -41,7 +41,6 @@
 
 		clickLi: function( event ) {
 			this.picker.find( 'li.suggestlist-selected' ).removeClass( 'suggestlist-selected' );
-			$( event.currentTarget ).addClass( 'suggestlist-selected' );
 			this.element[0].focus();
 			this.updateVal();
 		},
